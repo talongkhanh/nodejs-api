@@ -27,16 +27,17 @@ app.get('/', (req, res, next) => {
 })
 
 app.use((req, res, next) => {
-    const error = new Error('Not Found')
-    error.status = 404
-    next(error)
+    const err = new Error('Not Found')
+    err.status = 404
+    next(err)
 })
 
-app.use(() => {
-    const error = app.get('env') === 'development' ? error : {}
-    const status = error.status || 500
+app.use((err, req, res, next) => {
+    const error = app.get('env') === 'development' ? err : {}
+    const status = err.status || 500
     return res.status(status).json({
         error: {
+            status: status,
             message: error.message
         }
     })

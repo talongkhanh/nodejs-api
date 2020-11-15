@@ -1,5 +1,5 @@
 
-const router = require('express').Router()
+const router = require('express-promise-router')()
 
 const userController = require('../controllers/user')
 
