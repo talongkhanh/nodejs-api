@@ -1,12 +1,14 @@
-
 const bodyParser = require('body-parser')
 const express = require('express')
 const logger = require('morgan')
 const mongoose = require('mongoose')
 
-mongoose.connect('mongodb://localhost/node_api', {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
+mongoose
+    .connect('mongodb://localhost/node_api', {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        useFindAndModify: false,
     })
     .then(() => console.log('Connect database successfuly.'))
     .catch((err) => console.log('Connect database error: ' + err))
@@ -22,7 +24,7 @@ app.use('/users', userRouter)
 
 app.get('/', (req, res, next) => {
     return res.status(200).json({
-        message: 'Server is OK.'
+        message: 'Server is OK.',
     })
 })
 
@@ -38,8 +40,8 @@ app.use((err, req, res, next) => {
     return res.status(status).json({
         error: {
             status: status,
-            message: error.message
-        }
+            message: error.message,
+        },
     })
 })
 
